@@ -491,8 +491,10 @@ dependencies = [
 name = "bar"
 version = "0.1.0"
 dependencies = [
+ "compositor",
  "gpui",
  "gpui-component",
+ "smallvec",
 ]
 
 [[package]]
@@ -924,10 +926,13 @@ dependencies = [
 name = "compositor"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "async-net",
  "bytes",
  "futures-lite 2.6.1",
  "libc",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

@@ -7,6 +7,8 @@ default-members = ["crates/shell"]
 bar = { path = "crates/bar" }
 compositor = { path = "crates/compositor" }
 
+anyhow = "1.0.102"
+smallvec = "1.15.1"
 
 gpui = { git = "https://github.com/zed-industries/zed.git", features = ["wayland"] }
 gpui_platform = { git = "https://github.com/zed-industries/zed.git", features=[
