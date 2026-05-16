@@ -1,0 +1,12 @@
+[package]
+name = "shell"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bar.workspace = true
+compositor.workspace = true
+
+gpui.workspace = true
+gpui_platform.workspace = true
+gpui-component.workspace = true

@@ -1,0 +1,17 @@
+[workspace]
+resolver = "3"
+members = ["crates/bar", "crates/compositor", "crates/shell"]
+default-members = ["crates/shell"]
+
+[workspace.dependencies]
+bar = { path = "crates/bar" }
+compositor = { path = "crates/compositor" }
+
+
+gpui = { git = "https://github.com/zed-industries/zed.git", features = ["wayland"] }
+gpui_platform = { git = "https://github.com/zed-industries/zed.git", features=[
+    "font-kit",
+    "wayland",
+]}
+
+gpui-component = { git = "https://github.com/longbridge/gpui-component.git" }

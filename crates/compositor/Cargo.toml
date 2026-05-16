@@ -1,0 +1,10 @@
+[package]
+name = "compositor"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-net = "2.0.0"
+bytes = "1.11.1"
+futures-lite = "2.6.1"
+libc = "0.2.186"
