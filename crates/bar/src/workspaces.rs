@@ -1,8 +1,9 @@
 use compositor::hypr;
 use gpui::{
-    IntoElement, ParentElement, RenderOnce, SharedString, Styled, div, prelude::FluentBuilder, red,
+    InteractiveElement, IntoElement, ParentElement, RenderOnce, SharedString, Styled, div,
+    prelude::FluentBuilder, px, red,
 };
-use gpui_component::{label::Label, red_100, white};
+use gpui_component::{ActiveTheme, Colorize, StyledExt, black, label::Label, red_100, white};
 use smallvec::SmallVec;
 
 #[derive(Clone, Debug)]
@@ -42,17 +43,45 @@ impl RenderOnce for WorkspacesComponent {
         window: &mut gpui::Window,
         cx: &mut gpui::App,
     ) -> impl gpui::prelude::IntoElement {
-        let children = (0..11).map(|i| {
-            let workspace = self.workspaces.iter().find(|workspace| workspace.id == i);
+        let children = self
+            .workspaces
+            .iter()
+            .filter(|workspace| workspace.id > 0)
+            .map(|workspace| {
+                let indicators =
+                    (0..workspace.windows).map(|_| div().bg(white()).w_full().h(px(1.)));
 
-            div()
-                .when_some(workspace, |this, workspace| {
-                    this.child(workspace.name.clone())
-                        .when(workspace.is_active, |this| this.text_color(red()))
-                })
-                .when_none(&workspace, |this| this.child(i.to_string()))
-        });
+                div()
+                    .id(workspace.id)
+                    .relative()
+                    .px_2()
+                    .font_semibold()
+                    .child(workspace.name.clone())
+                    .hover(|this| {
+                        this.bg(cx.theme().background.darken(0.5))
+                            .text_color(cx.theme().foreground)
+                    })
+                    .text_color(cx.theme().muted_foreground)
+                    .when(workspace.is_active, |this| {
+                        this.text_color(cx.theme().foreground)
+                    })
+                    .child(
+                        div()
+                            .absolute()
+                            .bottom(px(1.))
+                            .left_0()
+                            .flex()
+                            .w_full()
+                            .gap(px(1.))
+                            .children(indicators),
+                    )
+            });
 
-        div().text_color(red()).flex().children(children)
+        div()
+            .bg(cx.theme().background)
+            .px_1()
+            .flex()
+            .gap_1()
+            .children(children)
     }
 }

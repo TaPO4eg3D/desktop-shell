@@ -1,0 +1,13 @@
+[package]
+name = "assets"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rust-embed = "8.11.0"
+
+macros.workspace = true
+anyhow.workspace = true
+
+gpui.workspace = true
+gpui-component.workspace = true

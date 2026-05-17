@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 bar.workspace = true
+assets.workspace = true
 compositor.workspace = true
 
 gpui.workspace = true

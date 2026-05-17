@@ -4,7 +4,16 @@ use async_net::unix::UnixStream;
 use futures_lite::prelude::*;
 use serde::{Deserialize, de::DeserializeOwned};
 
-use crate::CompositorEvent;
+#[derive(Debug)]
+pub enum CompositorEvent {
+    ActiveWorkspaceChanged(i32),
+    WorkspaceRemoved,
+    WorkspaceCreated,
+    WindowOpened,
+    WindowClosed,
+    WindowMoved,
+    Unknown,
+}
 
 #[derive(Deserialize, Debug)]
 pub struct Workspace {
@@ -109,8 +118,15 @@ impl HyprlandObserver {
                         let mut iter = event_args.unwrap().split(",");
                         let workspace_id = iter.next().unwrap();
 
-                        CompositorEvent::WorkspaceChanged(i32::from_str(workspace_id).unwrap())
+                        CompositorEvent::ActiveWorkspaceChanged(
+                            i32::from_str(workspace_id).unwrap(),
+                        )
                     }
+                    "createworkspacev2" => CompositorEvent::WorkspaceCreated,
+                    "destroyworkspacev2" => CompositorEvent::WorkspaceRemoved,
+                    "openwindow" => CompositorEvent::WindowOpened,
+                    "closewindow" => CompositorEvent::WindowClosed,
+                    "movewindow" => CompositorEvent::WindowMoved,
                     _ => CompositorEvent::Unknown,
                 }
             })

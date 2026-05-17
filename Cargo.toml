@@ -1,11 +1,20 @@
 [workspace]
 resolver = "3"
-members = ["crates/bar", "crates/compositor", "crates/shell"]
+members = [
+    "crates/assets",
+    "crates/bar",
+    "crates/compositor",
+    "crates/macros",
+    "crates/shell"
+]
 default-members = ["crates/shell"]
 
 [workspace.dependencies]
+assets = { path = "crates/assets" }
+
 bar = { path = "crates/bar" }
 compositor = { path = "crates/compositor" }
+macros = { path = "crates/macros" }
 
 anyhow = "1.0.102"
 smallvec = "1.15.1"
